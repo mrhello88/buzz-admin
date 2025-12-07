@@ -435,16 +435,16 @@ export default function ServicesTable({ darkMode }) {
               rows="3"
             />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-4">
             <div>
               <label className={`block text-sm font-medium mb-2 ${darkMode ? "text-slate-300" : "text-gray-700"}`}>
                 Category <span className="text-red-500">*</span>
               </label>
-              <div className="flex flex-col sm:flex-row gap-2">
+              <div className="space-y-2">
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className={`flex-1 px-4 py-2 rounded-lg border ${
+                  className={`w-full px-4 py-2 rounded-lg border ${
                     darkMode ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-300 text-black"
                   } focus:outline-none focus:ring-2 focus:ring-blue-500`}
                   required
@@ -462,7 +462,7 @@ export default function ServicesTable({ darkMode }) {
                     value={newCategory}
                     onChange={(e) => setNewCategory(e.target.value)}
                     onKeyPress={(e) => e.key === "Enter" && handleAddCategory()}
-                    className={`flex-1 sm:w-32 px-3 py-2 rounded-lg border text-sm ${
+                    className={`flex-1 px-3 py-2 rounded-lg border text-sm ${
                       darkMode ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-300 text-black"
                     } focus:outline-none focus:ring-2 focus:ring-blue-500`}
                     placeholder="New category"
@@ -484,36 +484,38 @@ export default function ServicesTable({ darkMode }) {
               <label className={`block text-sm font-medium mb-2 ${darkMode ? "text-slate-300" : "text-gray-700"}`}>
                 Provider <span className="text-red-500">*</span>
               </label>
-              <div className="flex flex-col sm:flex-row gap-2">
-                <select
-                  value={formData.provider}
-                  onChange={(e) => setFormData({ ...formData, provider: e.target.value })}
-                  className={`flex-1 px-4 py-2 rounded-lg border ${
-                    darkMode ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-300 text-black"
-                  } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                  required
-                >
-                  <option value="">Select Provider</option>
-                  {providers.map((prov) => (
-                    <option key={prov} value={prov}>
-                      {prov}
-                    </option>
-                  ))}
-                </select>
-                <button
-                  type="button"
-                  onClick={handleSyncProviders}
-                  className={`px-3 py-2 rounded-lg border shrink-0 ${
-                    darkMode ? "bg-blue-600 border-blue-500 text-white hover:bg-blue-700" : "bg-blue-600 border-blue-500 text-white hover:bg-blue-700"
-                  } transition-colors flex items-center justify-center`}
-                  title="Sync Providers from API"
-                >
-                  <RefreshCw size={16} />
-                </button>
+              <div className="space-y-2">
+                <div className="flex gap-2">
+                  <select
+                    value={formData.provider}
+                    onChange={(e) => setFormData({ ...formData, provider: e.target.value })}
+                    className={`flex-1 px-4 py-2 rounded-lg border ${
+                      darkMode ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-300 text-black"
+                    } focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                    required
+                  >
+                    <option value="">Select Provider</option>
+                    {providers.map((prov) => (
+                      <option key={prov} value={prov}>
+                        {prov}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    onClick={handleSyncProviders}
+                    className={`px-3 py-2 rounded-lg border shrink-0 ${
+                      darkMode ? "bg-blue-600 border-blue-500 text-white hover:bg-blue-700" : "bg-blue-600 border-blue-500 text-white hover:bg-blue-700"
+                    } transition-colors flex items-center justify-center`}
+                    title="Sync Providers from API"
+                  >
+                    <RefreshCw size={16} />
+                  </button>
+                </div>
+                <p className={`text-xs ${darkMode ? "text-slate-500" : "text-gray-500"}`}>
+                  Providers are synced from API. Click refresh to sync latest providers.
+                </p>
               </div>
-              <p className={`text-xs mt-1 ${darkMode ? "text-slate-500" : "text-gray-500"}`}>
-                Providers are synced from API. Click refresh to sync latest providers.
-              </p>
             </div>
           </div>
           <div>
@@ -582,16 +584,16 @@ export default function ServicesTable({ darkMode }) {
             )}
           </div>
 
-          <div className="flex gap-3 pt-4">
+          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-700/50">
             <button
               onClick={handleSave}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors font-medium"
+              className="w-full sm:flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg transition-colors font-medium text-sm sm:text-base"
             >
               Save
             </button>
             <button
               onClick={() => setShowModal(false)}
-              className={`flex-1 px-4 py-2 rounded-lg transition-colors font-medium ${darkMode ? "bg-slate-800 text-white hover:bg-slate-700" : "bg-gray-200 text-black hover:bg-gray-300"}`}
+              className={`w-full sm:flex-1 px-4 py-2.5 rounded-lg transition-colors font-medium text-sm sm:text-base ${darkMode ? "bg-slate-800 text-white hover:bg-slate-700" : "bg-gray-200 text-black hover:bg-gray-300"}`}
             >
               Cancel
             </button>
@@ -731,7 +733,7 @@ export default function ServicesTable({ darkMode }) {
               <Plus size={16} />
               Add New Pricing Tier
             </button>
-            <div className="flex gap-3 pt-4 border-t border-slate-700">
+            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-700">
               <button
                 onClick={() => {
                   // Validate pricing tiers
@@ -760,7 +762,7 @@ export default function ServicesTable({ darkMode }) {
                   setShowPricingModal(false)
                   setEditingPricingService(null)
                 }}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors font-medium"
+                className="w-full sm:flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg transition-colors font-medium text-sm sm:text-base"
               >
                 Save Pricing
               </button>
@@ -769,7 +771,7 @@ export default function ServicesTable({ darkMode }) {
                   setShowPricingModal(false)
                   setEditingPricingService(null)
                 }}
-                className={`flex-1 px-4 py-2 rounded-lg transition-colors font-medium ${
+                className={`w-full sm:flex-1 px-4 py-2.5 rounded-lg transition-colors font-medium text-sm sm:text-base ${
                   darkMode ? "bg-slate-800 text-white hover:bg-slate-700" : "bg-gray-200 text-black hover:bg-gray-300"
                 }`}
               >

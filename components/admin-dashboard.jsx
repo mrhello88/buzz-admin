@@ -93,12 +93,14 @@ export default function AdminDashboard({ user, onLogout, darkMode: propDarkMode,
       />
 
       {/* Main Content */}
-      <div className={`flex-1 flex flex-col min-w-0 ${darkMode ? "bg-slate-950" : "bg-gray-50"}`}>
+      <div className={`flex-1 flex flex-col min-w-0 w-full lg:w-auto ${darkMode ? "bg-slate-950" : "bg-gray-50"}`}>
         <Header
           darkMode={darkMode}
           setDarkMode={handleDarkModeChange}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
         />
 
         {/* Content Area */}

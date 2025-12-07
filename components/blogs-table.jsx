@@ -572,7 +572,7 @@ export default function BlogsTable({ darkMode }) {
             </select>
           </div>
 
-          <div className="flex justify-end gap-3 pt-4">
+          <div className="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-4 border-t border-slate-700/50">
             <button
               onClick={() => {
                 setShowModal(false)
@@ -584,7 +584,7 @@ export default function BlogsTable({ darkMode }) {
                   status: "Draft",
                 })
               }}
-              className={`px-4 py-2 rounded-lg transition-colors ${
+              className={`w-full sm:w-auto px-4 py-2.5 rounded-lg transition-colors font-medium text-sm sm:text-base ${
                 darkMode ? "bg-slate-800 text-slate-300 hover:bg-slate-700" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               }`}
             >
@@ -592,7 +592,7 @@ export default function BlogsTable({ darkMode }) {
             </button>
             <button
               onClick={handleSave}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="w-full sm:w-auto px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm sm:text-base"
             >
               {editingBlog ? "Update" : "Create"} Blog
             </button>

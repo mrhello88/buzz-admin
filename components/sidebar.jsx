@@ -13,12 +13,19 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, activeTab, setAct
         />
       )}
       <div
-        className={`fixed lg:static inset-y-0 left-0 z-50 ${sidebarOpen ? "w-64" : "w-20"} bg-slate-900 text-white transition-all duration-300 flex flex-col border-r border-slate-700`}
+        className={`fixed lg:static inset-y-0 left-0 z-50 transition-all duration-300 flex flex-col border-r border-slate-700 ${
+          sidebarOpen 
+            ? "w-64 translate-x-0" 
+            : "w-0 lg:w-20 -translate-x-full lg:translate-x-0"
+        } bg-slate-900 text-white overflow-hidden`}
       >
       {/* Logo */}
-      <div className="p-6 border-b border-slate-700 flex items-center justify-between">
+      <div className={`p-6 border-b border-slate-700 flex items-center justify-between ${!sidebarOpen && "lg:justify-center"}`}>
         {sidebarOpen && <h1 className="text-xl font-bold">SMM Panel</h1>}
-        <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-1 hover:bg-slate-800 rounded">
+        <button 
+          onClick={() => setSidebarOpen(!sidebarOpen)} 
+          className="p-1 hover:bg-slate-800 rounded lg:block"
+        >
           {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
@@ -28,7 +35,13 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, activeTab, setAct
         {navItems.map((item) => (
           <button
             key={item.id}
-            onClick={() => setActiveTab(item.id)}
+            onClick={() => {
+              setActiveTab(item.id)
+              // Close sidebar on mobile after selecting
+              if (window.innerWidth < 1024) {
+                setSidebarOpen(false)
+              }
+            }}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
               activeTab === item.id ? "bg-blue-600 text-white" : "text-slate-300 hover:bg-slate-800"
             }`}

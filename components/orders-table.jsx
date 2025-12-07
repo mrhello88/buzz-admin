@@ -315,16 +315,16 @@ export default function OrdersTable({ darkMode }) {
               <option>Completed</option>
             </select>
           </div>
-          <div className="flex gap-3 pt-4">
+          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-700/50">
             <button
               onClick={handleSave}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors font-medium"
+              className="w-full sm:flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg transition-colors font-medium text-sm sm:text-base"
             >
               Save
             </button>
             <button
               onClick={() => setShowModal(false)}
-              className={`flex-1 px-4 py-2 rounded-lg transition-colors font-medium ${darkMode ? "bg-slate-800 text-white hover:bg-slate-700" : "bg-gray-200 text-black hover:bg-gray-300"}`}
+              className={`w-full sm:flex-1 px-4 py-2.5 rounded-lg transition-colors font-medium text-sm sm:text-base ${darkMode ? "bg-slate-800 text-white hover:bg-slate-700" : "bg-gray-200 text-black hover:bg-gray-300"}`}
             >
               Cancel
             </button>
