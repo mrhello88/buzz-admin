@@ -200,16 +200,16 @@ export default function BlogsTable({ darkMode }) {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className={`text-3xl font-bold ${darkMode ? "text-white" : "text-black"}`}>Blog Management</h2>
-          <p className={`text-sm mt-1 ${darkMode ? "text-slate-400" : "text-gray-500"}`}>
+          <h2 className={`text-2xl sm:text-3xl font-bold ${darkMode ? "text-white" : "text-black"}`}>Blog Management</h2>
+          <p className={`text-xs sm:text-sm mt-1 ${darkMode ? "text-slate-400" : "text-gray-500"}`}>
             Create, edit, and manage your blog posts
           </p>
         </div>
         <button
           onClick={handleAdd}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors w-full sm:w-auto"
         >
           <Plus size={20} />
           Add New Blog
@@ -218,11 +218,10 @@ export default function BlogsTable({ darkMode }) {
 
       {/* Blogs Table */}
       <div
-        className={`${darkMode ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"} border rounded-lg overflow-hidden`}
+        className={`${darkMode ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"} border rounded-lg overflow-hidden overflow-x-auto`}
       >
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className={`${darkMode ? "bg-slate-800" : "bg-gray-50"}`}>
+        <table className="w-full min-w-[800px]">
+          <thead className={`${darkMode ? "bg-slate-800" : "bg-gray-50"}`}>
               <tr>
                 <th className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${darkMode ? "text-slate-300" : "text-gray-500"}`}>
                   Title
@@ -302,7 +301,6 @@ export default function BlogsTable({ darkMode }) {
               ))}
             </tbody>
           </table>
-        </div>
       </div>
 
       {/* Add/Edit Modal */}
@@ -526,7 +524,7 @@ export default function BlogsTable({ darkMode }) {
             `}</style>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className={`block text-sm font-medium mb-2 ${darkMode ? "text-slate-300" : "text-gray-700"}`}>
                 Author <span className="text-red-500">*</span>

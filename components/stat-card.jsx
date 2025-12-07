@@ -12,7 +12,7 @@ export default function StatCard({ title, value, change, changeType, icon: Icon,
         </div>
         <div className="flex items-end justify-between">
           <div>
-            <p className={`text-3xl font-bold mb-1 ${darkMode ? "text-white" : "text-black"}`}>{value}</p>
+            <p className={`text-2xl sm:text-3xl font-bold mb-1 ${darkMode ? "text-white" : "text-black"}`}>{value}</p>
             {description && (
               <p className={`text-xs ${darkMode ? "text-slate-500" : "text-gray-500"} mb-2`}>{description}</p>
             )}

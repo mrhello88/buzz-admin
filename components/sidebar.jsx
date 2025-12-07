@@ -4,9 +4,17 @@ import { Menu, X, LogOut, Users, ShoppingCart, CreditCard, Settings, FileText } 
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen, activeTab, setActiveTab, navItems, onLogout }) {
   return (
-    <div
-      className={`${sidebarOpen ? "w-64" : "w-20"} bg-slate-900 text-white transition-all duration-300 flex flex-col border-r border-slate-700`}
-    >
+    <>
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+      <div
+        className={`fixed lg:static inset-y-0 left-0 z-50 ${sidebarOpen ? "w-64" : "w-20"} bg-slate-900 text-white transition-all duration-300 flex flex-col border-r border-slate-700`}
+      >
       {/* Logo */}
       <div className="p-6 border-b border-slate-700 flex items-center justify-between">
         {sidebarOpen && <h1 className="text-xl font-bold">SMM Panel</h1>}
@@ -42,6 +50,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, activeTab, setAct
         </button>
       </div>
     </div>
+    </>
   )
 }
 

@@ -93,7 +93,7 @@ export default function AdminDashboard({ user, onLogout, darkMode: propDarkMode,
       />
 
       {/* Main Content */}
-      <div className={`flex-1 flex flex-col ${darkMode ? "bg-slate-950" : "bg-gray-50"}`}>
+      <div className={`flex-1 flex flex-col min-w-0 ${darkMode ? "bg-slate-950" : "bg-gray-50"}`}>
         <Header
           darkMode={darkMode}
           setDarkMode={handleDarkModeChange}
@@ -102,23 +102,23 @@ export default function AdminDashboard({ user, onLogout, darkMode: propDarkMode,
         />
 
         {/* Content Area */}
-        <main className="flex-1 overflow-auto p-8">
+        <main className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8">
           {activeTab === "dashboard" && (
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               {/* Welcome Header */}
-              <div className="flex items-center justify-between">
-                <div>
-                  <h1 className={`text-4xl font-bold mb-2 ${darkMode ? "text-white" : "text-black"}`}>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <h1 className={`text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 ${darkMode ? "text-white" : "text-black"}`}>
                     Welcome Back! 👋
                   </h1>
-                  <p className={`text-lg ${darkMode ? "text-slate-400" : "text-gray-600"}`}>
+                  <p className={`text-sm sm:text-base lg:text-lg ${darkMode ? "text-slate-400" : "text-gray-600"}`}>
                     Here's what's happening with your SMM panel today.
                   </p>
                 </div>
-                <div className={`flex items-center gap-2 px-4 py-2 rounded-lg ${darkMode ? "bg-slate-800" : "bg-white border border-gray-200"}`}>
-                  <Clock size={18} className={darkMode ? "text-slate-400" : "text-gray-500"} />
-                  <span className={`text-sm ${darkMode ? "text-slate-300" : "text-gray-700"}`}>
-                    {new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+                <div className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg shrink-0 ${darkMode ? "bg-slate-800" : "bg-white border border-gray-200"}`}>
+                  <Clock size={16} className={`shrink-0 ${darkMode ? "text-slate-400" : "text-gray-500"}`} />
+                  <span className={`text-xs sm:text-sm whitespace-nowrap ${darkMode ? "text-slate-300" : "text-gray-700"}`}>
+                    {new Date().toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
                   </span>
                 </div>
               </div>
@@ -131,19 +131,19 @@ export default function AdminDashboard({ user, onLogout, darkMode: propDarkMode,
               </div>
 
               {/* Charts Row */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {/* Revenue Chart */}
                 <div
-                  className={`${darkMode ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"} border rounded-lg p-6`}
+                  className={`${darkMode ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"} border rounded-lg p-4 sm:p-6`}
                 >
-                  <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center justify-between mb-4 sm:mb-6">
                     <div>
-                      <h3 className={`text-xl font-bold ${darkMode ? "text-white" : "text-black"}`}>Revenue Overview</h3>
-                      <p className={`text-sm ${darkMode ? "text-slate-400" : "text-gray-500"}`}>Last 6 months</p>
+                      <h3 className={`text-lg sm:text-xl font-bold ${darkMode ? "text-white" : "text-black"}`}>Revenue Overview</h3>
+                      <p className={`text-xs sm:text-sm ${darkMode ? "text-slate-400" : "text-gray-500"}`}>Last 6 months</p>
                     </div>
-                    <TrendingUp className={darkMode ? "text-green-400" : "text-green-600"} size={24} />
+                    <TrendingUp className={`shrink-0 ${darkMode ? "text-green-400" : "text-green-600"}`} size={20} />
                   </div>
-                  <ResponsiveContainer width="100%" height={300}>
+                  <ResponsiveContainer width="100%" height={250}>
                     <AreaChart data={revenueData}>
                       <defs>
                         <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
@@ -168,16 +168,16 @@ export default function AdminDashboard({ user, onLogout, darkMode: propDarkMode,
 
                 {/* Orders Chart */}
                 <div
-                  className={`${darkMode ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"} border rounded-lg p-6`}
+                  className={`${darkMode ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"} border rounded-lg p-4 sm:p-6`}
                 >
-                  <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center justify-between mb-4 sm:mb-6">
                     <div>
-                      <h3 className={`text-xl font-bold ${darkMode ? "text-white" : "text-black"}`}>Order Status</h3>
-                      <p className={`text-sm ${darkMode ? "text-slate-400" : "text-gray-500"}`}>Current status breakdown</p>
+                      <h3 className={`text-lg sm:text-xl font-bold ${darkMode ? "text-white" : "text-black"}`}>Order Status</h3>
+                      <p className={`text-xs sm:text-sm ${darkMode ? "text-slate-400" : "text-gray-500"}`}>Current status breakdown</p>
                     </div>
-                    <Activity className={darkMode ? "text-blue-400" : "text-blue-600"} size={24} />
+                    <Activity className={`shrink-0 ${darkMode ? "text-blue-400" : "text-blue-600"}`} size={20} />
                   </div>
-                  <ResponsiveContainer width="100%" height={300}>
+                  <ResponsiveContainer width="100%" height={250}>
                     <BarChart data={orderStatusData}>
                       <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? "#334155" : "#e5e7eb"} />
                       <XAxis dataKey="name" stroke={darkMode ? "#94a3b8" : "#6b7280"} />
@@ -196,11 +196,11 @@ export default function AdminDashboard({ user, onLogout, darkMode: propDarkMode,
                       </Bar>
                     </BarChart>
                   </ResponsiveContainer>
-                  <div className="mt-4 flex gap-4 justify-center">
+                  <div className="mt-4 flex flex-wrap gap-3 sm:gap-4 justify-center">
                     {orderStatusData.map((item, index) => (
                       <div key={index} className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
-                        <span className={`text-sm ${darkMode ? "text-slate-300" : "text-gray-700"}`}>
+                        <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
+                        <span className={`text-xs sm:text-sm whitespace-nowrap ${darkMode ? "text-slate-300" : "text-gray-700"}`}>
                           {item.name}: {item.value}
                         </span>
                       </div>
@@ -210,33 +210,33 @@ export default function AdminDashboard({ user, onLogout, darkMode: propDarkMode,
               </div>
 
               {/* Recent Orders and Activity */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
                 {/* Recent Orders */}
                 <div
-                  className={`${darkMode ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"} border rounded-lg p-6`}
+                  className={`${darkMode ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"} border rounded-lg p-4 sm:p-6`}
                 >
-                  <div className="flex items-center justify-between mb-6">
-                    <h3 className={`text-xl font-bold ${darkMode ? "text-white" : "text-black"}`}>Recent Orders</h3>
+                  <div className="flex items-center justify-between mb-4 sm:mb-6">
+                    <h3 className={`text-lg sm:text-xl font-bold ${darkMode ? "text-white" : "text-black"}`}>Recent Orders</h3>
                     <button
-                      className={`text-sm ${darkMode ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-700"} flex items-center gap-1`}
+                      className={`text-xs sm:text-sm ${darkMode ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-700"} flex items-center gap-1 shrink-0`}
                     >
                       View All
-                      <ArrowUpRight size={16} />
+                      <ArrowUpRight size={14} />
                     </button>
                   </div>
-                  <div className="space-y-4">
+                  <div className="space-y-3 sm:space-y-4">
                     {recentOrders.map((order) => (
                       <div
                         key={order.id}
-                        className={`flex items-center justify-between p-4 rounded-lg border ${darkMode ? "bg-slate-800 border-slate-700" : "bg-gray-50 border-gray-200"} hover:shadow-md transition-shadow`}
+                        className={`flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4 p-3 sm:p-4 rounded-lg border ${darkMode ? "bg-slate-800 border-slate-700" : "bg-gray-50 border-gray-200"} hover:shadow-md transition-shadow`}
                       >
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-1">
-                            <p className={`font-semibold ${darkMode ? "text-white" : "text-black"}`}>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 sm:gap-3 mb-1 flex-wrap">
+                            <p className={`text-sm sm:text-base font-semibold ${darkMode ? "text-white" : "text-black"}`}>
                               #{order.id}
                             </p>
                             <span
-                              className={`px-2 py-1 rounded-full text-xs font-medium ${
+                              className={`px-2 py-1 rounded-full text-xs font-medium shrink-0 ${
                                 order.status === "Completed"
                                   ? "bg-green-500/20 text-green-400"
                                   : "bg-yellow-500/20 text-yellow-400"
@@ -245,10 +245,10 @@ export default function AdminDashboard({ user, onLogout, darkMode: propDarkMode,
                               {order.status}
                             </span>
                           </div>
-                          <p className={`text-sm font-medium ${darkMode ? "text-slate-300" : "text-gray-700"}`}>
+                          <p className={`text-xs sm:text-sm font-medium ${darkMode ? "text-slate-300" : "text-gray-700"} truncate`}>
                             {order.service}
                           </p>
-                          <div className="flex items-center gap-4 mt-2">
+                          <div className="flex items-center gap-2 sm:gap-4 mt-2 flex-wrap">
                             <p className={`text-xs ${darkMode ? "text-slate-400" : "text-gray-500"}`}>
                               {order.user}
                             </p>
@@ -257,8 +257,8 @@ export default function AdminDashboard({ user, onLogout, darkMode: propDarkMode,
                             </p>
                           </div>
                         </div>
-                        <div className="text-right">
-                          <p className={`font-bold ${darkMode ? "text-white" : "text-black"}`}>{order.amount}</p>
+                        <div className="text-left sm:text-right shrink-0">
+                          <p className={`text-sm sm:text-base font-bold ${darkMode ? "text-white" : "text-black"}`}>{order.amount}</p>
                         </div>
                       </div>
                     ))}
@@ -267,11 +267,11 @@ export default function AdminDashboard({ user, onLogout, darkMode: propDarkMode,
 
                 {/* Recent Activity */}
                 <div
-                  className={`${darkMode ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"} border rounded-lg p-6`}
+                  className={`${darkMode ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"} border rounded-lg p-4 sm:p-6`}
                 >
-                  <div className="flex items-center justify-between mb-6">
-                    <h3 className={`text-xl font-bold ${darkMode ? "text-white" : "text-black"}`}>Recent Activity</h3>
-                    <Activity className={darkMode ? "text-purple-400" : "text-purple-600"} size={24} />
+                  <div className="flex items-center justify-between mb-4 sm:mb-6">
+                    <h3 className={`text-lg sm:text-xl font-bold ${darkMode ? "text-white" : "text-black"}`}>Recent Activity</h3>
+                    <Activity className={`shrink-0 ${darkMode ? "text-purple-400" : "text-purple-600"}`} size={20} />
                   </div>
                   <div className="space-y-4">
                     {recentActivities.map((activity, index) => (

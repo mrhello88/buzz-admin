@@ -5,24 +5,24 @@ import { Search, Bell, Moon, Sun } from "lucide-react"
 export default function Header({ darkMode, setDarkMode, searchQuery, setSearchQuery }) {
   return (
     <header
-      className={`${darkMode ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"} border-b px-8 py-4 flex items-center justify-between`}
+      className={`${darkMode ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"} border-b px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between gap-4`}
     >
-      <div className="flex items-center gap-4 flex-1">
+      <div className="flex items-center gap-2 sm:gap-4 flex-1 min-w-0">
         <div
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg ${darkMode ? "bg-slate-800" : "bg-gray-100"}`}
+          className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg flex-1 min-w-0 ${darkMode ? "bg-slate-800" : "bg-gray-100"}`}
         >
-          <Search size={18} className={darkMode ? "text-slate-400" : "text-gray-500"} />
+          <Search size={18} className={`shrink-0 ${darkMode ? "text-slate-400" : "text-gray-500"}`} />
           <input
             type="text"
             placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={`bg-transparent outline-none w-64 ${darkMode ? "text-white placeholder-slate-500" : "text-black placeholder-gray-400"}`}
+            className={`bg-transparent outline-none w-full min-w-0 ${darkMode ? "text-white placeholder-slate-500" : "text-black placeholder-gray-400"}`}
           />
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 sm:gap-4 shrink-0">
         <button
           className={`p-2 rounded-lg ${darkMode ? "bg-slate-800 text-slate-300 hover:bg-slate-700" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
         >

@@ -70,20 +70,20 @@ export default function PaymentsTable({ darkMode }) {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h2 className={`text-2xl font-bold ${darkMode ? "text-white" : "text-black"}`}>Payments Management</h2>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <h2 className={`text-xl sm:text-2xl font-bold ${darkMode ? "text-white" : "text-black"}`}>Payments Management</h2>
         <button
           onClick={handleAdd}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors w-full sm:w-auto"
         >
           <Plus size={18} /> Add Payment
         </button>
       </div>
 
       <div
-        className={`${darkMode ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"} border rounded-lg overflow-hidden`}
+        className={`${darkMode ? "bg-slate-900 border-slate-700" : "bg-white border-gray-200"} border rounded-lg overflow-hidden overflow-x-auto`}
       >
-        <table className="w-full">
+        <table className="w-full min-w-[700px]">
           <thead
             className={`${darkMode ? "bg-slate-800" : "bg-gray-50"} border-b ${darkMode ? "border-slate-700" : "border-gray-200"}`}
           >
