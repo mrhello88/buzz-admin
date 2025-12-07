@@ -13,11 +13,17 @@ import BlogsTable from "./blogs-table"
 import Sidebar from "./sidebar"
 import Header from "./header"
 
-export default function AdminDashboard() {
+export default function AdminDashboard({ user, onLogout, darkMode: propDarkMode, setDarkMode: setPropDarkMode }) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
-  const [darkMode, setDarkMode] = useState(true)
+  const [darkMode, setDarkMode] = useState(propDarkMode !== undefined ? propDarkMode : true)
   const [activeTab, setActiveTab] = useState("dashboard")
   const [searchQuery, setSearchQuery] = useState("")
+
+  // Sync dark mode with parent
+  const handleDarkModeChange = (newMode) => {
+    setDarkMode(newMode)
+    if (setPropDarkMode) setPropDarkMode(newMode)
+  }
 
   const stats = [
     { title: "Total Users", value: "2,543", change: "+12%", changeType: "up", icon: Users, color: "from-blue-500 to-blue-600", description: "Active users this month" },
@@ -83,13 +89,14 @@ export default function AdminDashboard() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         navItems={navItems}
+        onLogout={onLogout}
       />
 
       {/* Main Content */}
       <div className={`flex-1 flex flex-col ${darkMode ? "bg-slate-950" : "bg-gray-50"}`}>
         <Header
           darkMode={darkMode}
-          setDarkMode={setDarkMode}
+          setDarkMode={handleDarkModeChange}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
         />

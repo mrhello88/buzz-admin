@@ -2,7 +2,7 @@
 
 import { Menu, X, LogOut, Users, ShoppingCart, CreditCard, Settings, FileText } from "lucide-react"
 
-export default function Sidebar({ sidebarOpen, setSidebarOpen, activeTab, setActiveTab, navItems }) {
+export default function Sidebar({ sidebarOpen, setSidebarOpen, activeTab, setActiveTab, navItems, onLogout }) {
   return (
     <div
       className={`${sidebarOpen ? "w-64" : "w-20"} bg-slate-900 text-white transition-all duration-300 flex flex-col border-r border-slate-700`}
@@ -33,7 +33,10 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen, activeTab, setAct
 
       {/* Logout */}
       <div className="p-4 border-t border-slate-700">
-        <button className="w-full flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 rounded-lg transition-colors">
+        <button
+          onClick={onLogout}
+          className="w-full flex items-center gap-3 px-4 py-3 text-slate-300 hover:bg-slate-800 rounded-lg transition-colors"
+        >
           <LogOut size={20} />
           {sidebarOpen && <span>Logout</span>}
         </button>

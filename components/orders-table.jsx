@@ -9,48 +9,64 @@ export default function OrdersTable({ darkMode }) {
     {
       id: 1001,
       user: "John Doe",
+      email: "john@example.com",
       service: "Instagram Followers",
       quantity: 1000,
       price: "$50",
       status: "Completed",
       date: "2024-03-15",
+      socialLink: "https://instagram.com/johndoe",
     },
     {
       id: 1002,
       user: "Jane Smith",
+      email: "jane@example.com",
       service: "TikTok Likes",
       quantity: 5000,
       price: "$75",
       status: "Processing",
       date: "2024-03-16",
+      socialLink: "https://tiktok.com/@janesmith",
     },
     {
       id: 1003,
       user: "Mike Johnson",
+      email: "mike@example.com",
       service: "YouTube Views",
       quantity: 10000,
       price: "$120",
       status: "Pending",
       date: "2024-03-17",
+      socialLink: "https://youtube.com/@mikejohnson",
     },
     {
       id: 1004,
       user: "Sarah Williams",
+      email: "sarah@example.com",
       service: "Instagram Likes",
       quantity: 2000,
       price: "$40",
       status: "Completed",
       date: "2024-03-18",
+      socialLink: "https://instagram.com/sarahwilliams",
     },
   ])
 
   const [showModal, setShowModal] = useState(false)
   const [editingOrder, setEditingOrder] = useState(null)
-  const [formData, setFormData] = useState({ user: "", service: "", quantity: "", price: "", status: "Pending" })
+  const [formData, setFormData] = useState({
+    user: "",
+    email: "",
+    service: "",
+    quantity: "",
+    price: "",
+    status: "Pending",
+    socialLink: "",
+  })
 
   const handleAdd = () => {
     setEditingOrder(null)
-    setFormData({ user: "", service: "", quantity: "", price: "", status: "Pending" })
+    setFormData({ user: "", email: "", service: "", quantity: "", price: "", status: "Pending", socialLink: "" })
     setShowModal(true)
   }
 
@@ -122,7 +138,17 @@ export default function OrdersTable({ darkMode }) {
               <th
                 className={`px-6 py-3 text-left text-sm font-semibold ${darkMode ? "text-slate-300" : "text-gray-700"}`}
               >
+                Email
+              </th>
+              <th
+                className={`px-6 py-3 text-left text-sm font-semibold ${darkMode ? "text-slate-300" : "text-gray-700"}`}
+              >
                 Service
+              </th>
+              <th
+                className={`px-6 py-3 text-left text-sm font-semibold ${darkMode ? "text-slate-300" : "text-gray-700"}`}
+              >
+                Social Link
               </th>
               <th
                 className={`px-6 py-3 text-left text-sm font-semibold ${darkMode ? "text-slate-300" : "text-gray-700"}`}
@@ -153,8 +179,14 @@ export default function OrdersTable({ darkMode }) {
                 className={`border-b ${darkMode ? "border-slate-700 hover:bg-slate-800" : "border-gray-200 hover:bg-gray-50"} transition-colors`}
               >
                 <td className={`px-6 py-4 font-medium ${darkMode ? "text-white" : "text-black"}`}>#{order.id}</td>
-                <td className={`px-6 py-4 ${darkMode ? "text-slate-400" : "text-gray-600"}`}>{order.user}</td>
+                <td className={`px-6 py-4 ${darkMode ? "text-slate-300" : "text-gray-700"}`}>{order.user}</td>
+                <td className={`px-6 py-4 ${darkMode ? "text-slate-400" : "text-gray-600"}`}>{order.email}</td>
                 <td className={`px-6 py-4 ${darkMode ? "text-slate-400" : "text-gray-600"}`}>{order.service}</td>
+                <td className={`px-6 py-4 ${darkMode ? "text-blue-400" : "text-blue-600"}`}>
+                  <a href={order.socialLink} target="_blank" rel="noopener noreferrer" className="hover:underline truncate block max-w-xs">
+                    {order.socialLink}
+                  </a>
+                </td>
                 <td className={`px-6 py-4 ${darkMode ? "text-white" : "text-black"}`}>{order.quantity}</td>
                 <td className={`px-6 py-4 font-medium ${darkMode ? "text-white" : "text-black"}`}>{order.price}</td>
                 <td className="px-6 py-4">
@@ -191,14 +223,44 @@ export default function OrdersTable({ darkMode }) {
         <div className="space-y-4">
           <div>
             <label className={`block text-sm font-medium mb-2 ${darkMode ? "text-slate-300" : "text-gray-700"}`}>
-              User
+              User Name
             </label>
             <input
               type="text"
               value={formData.user}
               onChange={(e) => setFormData({ ...formData, user: e.target.value })}
               className={`w-full px-4 py-2 rounded-lg border ${darkMode ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-300 text-black"} focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              placeholder="Enter user name"
             />
+          </div>
+          <div>
+            <label className={`block text-sm font-medium mb-2 ${darkMode ? "text-slate-300" : "text-gray-700"}`}>
+              Email <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className={`w-full px-4 py-2 rounded-lg border ${darkMode ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-300 text-black"} focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              placeholder="user@example.com"
+              required
+            />
+          </div>
+          <div>
+            <label className={`block text-sm font-medium mb-2 ${darkMode ? "text-slate-300" : "text-gray-700"}`}>
+              Social Media Link <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="url"
+              value={formData.socialLink}
+              onChange={(e) => setFormData({ ...formData, socialLink: e.target.value })}
+              className={`w-full px-4 py-2 rounded-lg border ${darkMode ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-300 text-black"} focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              placeholder="https://instagram.com/username"
+              required
+            />
+            <p className={`text-xs mt-1 ${darkMode ? "text-slate-500" : "text-gray-500"}`}>
+              Enter the social media profile URL where service will be applied
+            </p>
           </div>
           <div>
             <label className={`block text-sm font-medium mb-2 ${darkMode ? "text-slate-300" : "text-gray-700"}`}>

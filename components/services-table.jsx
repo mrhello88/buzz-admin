@@ -1,66 +1,151 @@
 "use client"
 
 import { useState } from "react"
-import { Edit2, Trash2, Plus } from "lucide-react"
+import { Edit2, Trash2, Plus, DollarSign, Package } from "lucide-react"
 import Modal from "./modal"
 
 export default function ServicesTable({ darkMode }) {
+  const [categories, setCategories] = useState(["Instagram", "TikTok", "YouTube", "Twitter", "Facebook", "LinkedIn", "Pinterest", "Snapchat"])
+  const [providers, setProviders] = useState(["SMMPanel", "Buzzoid", "SocialBoost", "InstaFollowers", "SocialMediaMarket", "Custom API"])
+
   const [services, setServices] = useState([
     {
       id: 1,
+      serviceId: "IG-FOLLOWERS-001",
       name: "Instagram Followers",
       description: "Real Instagram followers",
-      price: 9.99,
       category: "Instagram",
+      provider: "SMMPanel",
       status: "Active",
+      pricingTiers: [
+        { quantity: 100, price: 2.99, discount: 0 },
+        { quantity: 500, price: 9.99, discount: 33 },
+        { quantity: 1000, price: 15.99, discount: 47 },
+        { quantity: 5000, price: 69.99, discount: 53 },
+        { quantity: 10000, price: 129.99, discount: 57 },
+      ],
     },
     {
       id: 2,
+      serviceId: "IG-LIKES-002",
       name: "Instagram Likes",
       description: "Instant likes on posts",
-      price: 4.99,
       category: "Instagram",
+      provider: "Buzzoid",
       status: "Active",
+      pricingTiers: [
+        { quantity: 100, price: 1.99, discount: 0 },
+        { quantity: 500, price: 6.99, discount: 30 },
+        { quantity: 1000, price: 11.99, discount: 40 },
+        { quantity: 5000, price: 49.99, discount: 50 },
+        { quantity: 10000, price: 89.99, discount: 55 },
+      ],
     },
     {
       id: 3,
+      serviceId: "TT-VIEWS-003",
       name: "TikTok Views",
       description: "High-quality TikTok views",
-      price: 7.99,
       category: "TikTok",
+      provider: "SocialBoost",
       status: "Active",
+      pricingTiers: [
+        { quantity: 1000, price: 4.99, discount: 0 },
+        { quantity: 5000, price: 19.99, discount: 20 },
+        { quantity: 10000, price: 34.99, discount: 30 },
+        { quantity: 50000, price: 149.99, discount: 40 },
+        { quantity: 100000, price: 279.99, discount: 44 },
+      ],
     },
     {
       id: 4,
+      serviceId: "YT-SUBS-004",
       name: "YouTube Subscribers",
       description: "Real YouTube subscribers",
-      price: 19.99,
       category: "YouTube",
-      status: "Inactive",
+      provider: "InstaFollowers",
+      status: "Active",
+      pricingTiers: [
+        { quantity: 100, price: 9.99, discount: 0 },
+        { quantity: 500, price: 39.99, discount: 20 },
+        { quantity: 1000, price: 69.99, discount: 30 },
+        { quantity: 5000, price: 299.99, discount: 40 },
+        { quantity: 10000, price: 549.99, discount: 45 },
+      ],
     },
     {
       id: 5,
+      serviceId: "TW-FOLLOWERS-005",
       name: "Twitter Followers",
       description: "Active Twitter followers",
-      price: 5.99,
       category: "Twitter",
+      provider: "SocialMediaMarket",
       status: "Active",
+      pricingTiers: [
+        { quantity: 100, price: 2.99, discount: 0 },
+        { quantity: 500, price: 11.99, discount: 20 },
+        { quantity: 1000, price: 19.99, discount: 33 },
+        { quantity: 5000, price: 79.99, discount: 47 },
+        { quantity: 10000, price: 139.99, discount: 53 },
+      ],
     },
   ])
 
   const [showModal, setShowModal] = useState(false)
   const [editingService, setEditingService] = useState(null)
-  const [formData, setFormData] = useState({ name: "", description: "", price: "", category: "", status: "Active" })
+  const [formData, setFormData] = useState({
+    serviceId: "",
+    name: "",
+    description: "",
+    category: "",
+    provider: "",
+    status: "Active",
+    pricingTiers: [{ quantity: "", price: "", discount: 0 }],
+  })
+  const [newCategory, setNewCategory] = useState("")
+  const [newProvider, setNewProvider] = useState("")
+  const [showPricingModal, setShowPricingModal] = useState(false)
+  const [editingPricingService, setEditingPricingService] = useState(null)
 
   const handleAdd = () => {
     setEditingService(null)
-    setFormData({ name: "", description: "", price: "", category: "", status: "Active" })
+    setFormData({
+      serviceId: "",
+      name: "",
+      description: "",
+      category: "",
+      provider: "",
+      status: "Active",
+      pricingTiers: [{ quantity: "", price: "", discount: 0 }],
+    })
     setShowModal(true)
+  }
+
+  const handleAddCategory = () => {
+    if (newCategory.trim() && !categories.includes(newCategory.trim())) {
+      setCategories([...categories, newCategory.trim()])
+      setNewCategory("")
+    }
+  }
+
+  const handleAddProvider = () => {
+    if (newProvider.trim() && !providers.includes(newProvider.trim())) {
+      setProviders([...providers, newProvider.trim()])
+      setNewProvider("")
+    }
   }
 
   const handleEdit = (service) => {
     setEditingService(service)
-    setFormData(service)
+    setFormData({
+      serviceId: service.serviceId || "",
+      name: service.name,
+      description: service.description,
+      category: service.category,
+      provider: service.provider || "",
+      status: service.status,
+      pricingTiers: service.pricingTiers || [{ quantity: 100, price: 0, discount: 0 }],
+    })
     setShowModal(true)
   }
 
@@ -69,14 +154,29 @@ export default function ServicesTable({ darkMode }) {
   }
 
   const handleSave = () => {
-    if (editingService) {
-      setServices(services.map((s) => (s.id === editingService.id ? { ...formData, id: s.id } : s)))
+    if (!formData.serviceId || !formData.name || !formData.category || !formData.provider) {
+      alert("Please fill in Service ID, Name, Category, and Provider")
+      return
+    }
+            if (editingService) {
+      setServices(
+        services.map((s) =>
+          s.id === editingService.id
+            ? {
+                ...formData,
+                id: s.id,
+                pricingTiers: formData.pricingTiers || [{ quantity: 100, price: 0, discount: 0 }],
+              }
+            : s
+        )
+      )
     } else {
       setServices([
         ...services,
         {
           ...formData,
           id: Math.max(...services.map((s) => s.id), 0) + 1,
+          pricingTiers: formData.pricingTiers || [{ quantity: 100, price: 0, discount: 0 }],
         },
       ])
     }
@@ -121,7 +221,7 @@ export default function ServicesTable({ darkMode }) {
               <th
                 className={`px-6 py-3 text-left text-sm font-semibold ${darkMode ? "text-slate-300" : "text-gray-700"}`}
               >
-                Price
+                Pricing Tiers
               </th>
               <th
                 className={`px-6 py-3 text-left text-sm font-semibold ${darkMode ? "text-slate-300" : "text-gray-700"}`}
@@ -141,11 +241,39 @@ export default function ServicesTable({ darkMode }) {
                 key={service.id}
                 className={`border-b ${darkMode ? "border-slate-700 hover:bg-slate-800" : "border-gray-200 hover:bg-gray-50"} transition-colors`}
               >
+                <td className={`px-6 py-4 font-mono text-sm ${darkMode ? "text-blue-400" : "text-blue-600"}`}>
+                  {service.serviceId || "N/A"}
+                </td>
                 <td className={`px-6 py-4 font-medium ${darkMode ? "text-white" : "text-black"}`}>{service.name}</td>
-                <td className={`px-6 py-4 ${darkMode ? "text-slate-400" : "text-gray-600"}`}>{service.description}</td>
                 <td className={`px-6 py-4 ${darkMode ? "text-slate-400" : "text-gray-600"}`}>{service.category}</td>
-                <td className={`px-6 py-4 font-semibold ${darkMode ? "text-green-400" : "text-green-600"}`}>
-                  ${service.price}
+                <td className={`px-6 py-4 ${darkMode ? "text-purple-400" : "text-purple-600"}`}>
+                  <span className="px-2 py-1 rounded text-xs font-medium bg-purple-500/20">{service.provider || "N/A"}</span>
+                </td>
+                <td className={`px-6 py-4 ${darkMode ? "text-slate-300" : "text-gray-700"}`}>
+                  <div className="flex flex-col gap-1">
+                    {service.pricingTiers?.slice(0, 3).map((tier, idx) => (
+                      <div key={idx} className="text-sm">
+                        <span className="font-semibold">{tier.quantity.toLocaleString()}:</span>{" "}
+                        <span className={`${darkMode ? "text-green-400" : "text-green-600"}`}>${tier.price}</span>
+                        {tier.discount > 0 && (
+                          <span className={`ml-2 text-xs ${darkMode ? "text-blue-400" : "text-blue-600"}`}>
+                            ({tier.discount}% off)
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                    {service.pricingTiers?.length > 3 && (
+                      <button
+                        onClick={() => {
+                          setEditingPricingService(service)
+                          setShowPricingModal(true)
+                        }}
+                        className={`text-xs ${darkMode ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-700"} mt-1`}
+                      >
+                        +{service.pricingTiers.length - 3} more tiers
+                      </button>
+                    )}
+                  </div>
                 </td>
                 <td className="px-6 py-4">
                   <span
@@ -183,6 +311,24 @@ export default function ServicesTable({ darkMode }) {
         <div className="space-y-4">
           <div>
             <label className={`block text-sm font-medium mb-2 ${darkMode ? "text-slate-300" : "text-gray-700"}`}>
+              Service ID <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              value={formData.serviceId}
+              onChange={(e) => setFormData({ ...formData, serviceId: e.target.value })}
+              className={`w-full px-4 py-2 rounded-lg border font-mono ${
+                darkMode ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-300 text-black"
+              } focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              placeholder="e.g., IG-FOLLOWERS-001"
+              required
+            />
+            <p className={`text-xs mt-1 ${darkMode ? "text-slate-500" : "text-gray-500"}`}>
+              Unique identifier for API integration (required)
+            </p>
+          </div>
+          <div>
+            <label className={`block text-sm font-medium mb-2 ${darkMode ? "text-slate-300" : "text-gray-700"}`}>
               Service Name
             </label>
             <input
@@ -208,33 +354,87 @@ export default function ServicesTable({ darkMode }) {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className={`block text-sm font-medium mb-2 ${darkMode ? "text-slate-300" : "text-gray-700"}`}>
-                Category
+                Category <span className="text-red-500">*</span>
               </label>
-              <select
-                value={formData.category}
-                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className={`w-full px-4 py-2 rounded-lg border ${darkMode ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-300 text-black"} focus:outline-none focus:ring-2 focus:ring-blue-500`}
-              >
-                <option value="">Select Category</option>
-                <option>Instagram</option>
-                <option>TikTok</option>
-                <option>YouTube</option>
-                <option>Twitter</option>
-                <option>Facebook</option>
-              </select>
+              <div className="flex gap-2">
+                <select
+                  value={formData.category}
+                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                  className={`flex-1 px-4 py-2 rounded-lg border ${
+                    darkMode ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-300 text-black"
+                  } focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                  required
+                >
+                  <option value="">Select Category</option>
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="text"
+                  value={newCategory}
+                  onChange={(e) => setNewCategory(e.target.value)}
+                  onKeyPress={(e) => e.key === "Enter" && handleAddCategory()}
+                  className={`w-32 px-3 py-2 rounded-lg border text-sm ${
+                    darkMode ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-300 text-black"
+                  } focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                  placeholder="New category"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddCategory}
+                  className={`px-3 py-2 rounded-lg border ${
+                    darkMode ? "bg-slate-700 border-slate-600 text-white hover:bg-slate-600" : "bg-gray-100 border-gray-300 text-black hover:bg-gray-200"
+                  } transition-colors`}
+                  title="Add Category"
+                >
+                  <Plus size={16} />
+                </button>
+              </div>
             </div>
             <div>
               <label className={`block text-sm font-medium mb-2 ${darkMode ? "text-slate-300" : "text-gray-700"}`}>
-                Price ($)
+                Provider <span className="text-red-500">*</span>
               </label>
-              <input
-                type="number"
-                value={formData.price}
-                onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                className={`w-full px-4 py-2 rounded-lg border ${darkMode ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-300 text-black"} focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                placeholder="0.00"
-                step="0.01"
-              />
+              <div className="flex gap-2">
+                <select
+                  value={formData.provider}
+                  onChange={(e) => setFormData({ ...formData, provider: e.target.value })}
+                  className={`flex-1 px-4 py-2 rounded-lg border ${
+                    darkMode ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-300 text-black"
+                  } focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                  required
+                >
+                  <option value="">Select Provider</option>
+                  {providers.map((prov) => (
+                    <option key={prov} value={prov}>
+                      {prov}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="text"
+                  value={newProvider}
+                  onChange={(e) => setNewProvider(e.target.value)}
+                  onKeyPress={(e) => e.key === "Enter" && handleAddProvider()}
+                  className={`w-32 px-3 py-2 rounded-lg border text-sm ${
+                    darkMode ? "bg-slate-800 border-slate-700 text-white" : "bg-white border-gray-300 text-black"
+                  } focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                  placeholder="New provider"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddProvider}
+                  className={`px-3 py-2 rounded-lg border ${
+                    darkMode ? "bg-slate-700 border-slate-600 text-white hover:bg-slate-600" : "bg-gray-100 border-gray-300 text-black hover:bg-gray-200"
+                  } transition-colors`}
+                  title="Add Provider"
+                >
+                  <Plus size={16} />
+                </button>
+              </div>
             </div>
           </div>
           <div>
